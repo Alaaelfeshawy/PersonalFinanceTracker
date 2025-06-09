@@ -20,14 +20,14 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import example.app.presentation.model.Category
+import example.app.presentation.model.CategoryUIModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CategoryDropdown(
-    categories: List<Category>,
-    selectedCategory: Category?,
-    onCategorySelected: (Category) -> Unit
+    categories: List<CategoryUIModel>,
+    selectedCategory: CategoryUIModel?,
+    onCategorySelected: (CategoryUIModel) -> Unit
 ) {
     var expanded by remember { mutableStateOf(false) }
 
@@ -36,15 +36,15 @@ fun CategoryDropdown(
         onExpandedChange = { expanded = !expanded }
     ) {
         OutlinedTextField(
-            value = selectedCategory?.name ?: "",
+            value = selectedCategory?.title ?: "",
             onValueChange = {},
             readOnly = true,
             label = { Text("Category") },
-            leadingIcon = selectedCategory?.icon?.let {
+            leadingIcon = selectedCategory?.image?.let {
                 {
                     Icon(
                         imageVector = it,
-                        contentDescription = selectedCategory.name
+                        contentDescription = selectedCategory.title
                     )
                 }
 
@@ -66,12 +66,12 @@ fun CategoryDropdown(
                     text = {
                         Row(verticalAlignment = Alignment.CenterVertically) {
                             Icon(
-                                imageVector = category.icon,
-                                contentDescription = category.name,
+                                imageVector = category.image,
+                                contentDescription = category.title,
                                 modifier = Modifier.size(20.dp)
                             )
                             Spacer(modifier = Modifier.width(8.dp))
-                            Text(category.name)
+                            Text(category.title)
                         }
                     },
                     onClick = {

@@ -11,13 +11,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import example.app.presentation.Constants
+import example.app.presentation.model.TransactionType
 
 @Composable
 fun SegmentedButton(
-    options: List<Constants.Type>,
-    selectedOption: Constants.Type?,
-    onOptionSelected: (Constants.Type) -> Unit
+    options: List<TransactionType>,
+    selectedOption: TransactionType?,
+    onOptionSelected: (TransactionType) -> Unit
 ) {
     Row(
         horizontalArrangement = Arrangement.spacedBy(8.dp)

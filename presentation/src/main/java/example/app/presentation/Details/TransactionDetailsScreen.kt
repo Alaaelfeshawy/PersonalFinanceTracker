@@ -26,7 +26,7 @@ import example.app.presentation.components.TopBar
 
 @Composable
 fun TransactionDetailsScreen(
-    transactionId : String?=null,
+    transactionId : Long?=null,
     onBackClick: () -> Unit,
     onDeleteClick: () -> Unit,
     onEditClick: () -> Unit,

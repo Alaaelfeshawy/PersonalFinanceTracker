@@ -25,7 +25,7 @@ fun TransactionItem(
     transaction: TransactionUi,
     onEditClick: () -> Unit,
     onDeleteClick: () -> Unit,
-    onTransactionClicked: (String) -> Unit
+    onTransactionClicked: (Long) -> Unit
 ) {
     Card(
         modifier = Modifier
