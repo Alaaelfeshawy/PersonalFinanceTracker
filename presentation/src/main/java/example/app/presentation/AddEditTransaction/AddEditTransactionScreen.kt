@@ -43,7 +43,9 @@ fun AddEditTransactionScreen(
     val lifecycle = LocalLifecycleOwner.current
 
     LaunchedEffect(lifecycle) {
-        transactionId?.let { AddEditTransactionEvents.SetID(it) }?.let { viewModel.setEvent(it) }
+        if (transactionId != null){
+            viewModel.setEvent(AddEditTransactionEvents.GetTransactions(transactionId))
+        }
     }
 
     Scaffold(
@@ -74,14 +76,14 @@ fun AddEditTransactionScreen(
 
             SegmentedButton(
                 options = state.options,
-                selectedOption = state.transactionUi.type,
+                selectedOption = state.transactionUi?.type,
                 onOptionSelected = {
                     viewModel.setEvent(AddEditTransactionEvents.UpdateType(it))
                 }
             )
 
             OutlinedTextField(
-                value = state.transactionUi.amount.orEmpty(),
+                value = state.transactionUi?.amount.orEmpty(),
                 onValueChange = {viewModel.setEvent(AddEditTransactionEvents.UpdateAmount(it))},
                 label = { Text(stringResource(R.string.amount)) },
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
@@ -90,21 +92,21 @@ fun AddEditTransactionScreen(
 
             CategoryDropdown(
                 categories =categories,
-                selectedCategory = state.transactionUi.category,
+                selectedCategory = state.transactionUi?.category,
                 onCategorySelected = {
                     viewModel.setEvent(AddEditTransactionEvents.UpdateCategory(it))
                 }
             )
 
             DatePickerDocked(
-                selectedDate = state.transactionUi.date.orEmpty(),
+                selectedDate = state.transactionUi?.date.orEmpty(),
                 onDateSelected ={
                     viewModel.setEvent(AddEditTransactionEvents.UpdateDate(it))
                 }
             )
 
             OutlinedTextField(
-                value = state.transactionUi.notes.orEmpty(),
+                value = state.transactionUi?.notes.orEmpty(),
                 onValueChange = {viewModel.setEvent(AddEditTransactionEvents.UpdateNotes(it))},
                 label = { Text(stringResource(R.string.notes_optional)) },
                 modifier = Modifier.fillMaxWidth()
