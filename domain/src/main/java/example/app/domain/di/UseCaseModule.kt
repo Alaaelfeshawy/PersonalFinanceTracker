@@ -8,6 +8,7 @@ import example.app.domain.ITransactionRepository
 import example.app.domain.usecase.AddTransactionUseCase
 import example.app.domain.usecase.EditTransactionUseCase
 import example.app.domain.usecase.GetAllTransactionsUseCase
+import example.app.domain.usecase.GetTransactionUseCase
 import example.app.domain.usecase.RemoveTransactionUseCase
 
 @Module
@@ -32,5 +33,10 @@ object UseCaseModule {
     @Provides
     fun provideRemoveTransactionUseCase(repository: ITransactionRepository): RemoveTransactionUseCase {
         return RemoveTransactionUseCase(repository)
+    }
+
+    @Provides
+    fun provideGetTransactionUseCase(repository: ITransactionRepository): GetTransactionUseCase {
+        return GetTransactionUseCase(repository)
     }
 }

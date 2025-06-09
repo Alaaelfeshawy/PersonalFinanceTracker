@@ -8,5 +8,5 @@ interface ITransactionRepository {
     suspend fun addTransaction(transaction: TransactionDomainModel)
     suspend fun removeTransaction(transaction: TransactionDomainModel)
     suspend fun editTransaction(transaction: TransactionDomainModel)
-
+    suspend fun getTransaction(id: Long?): TransactionDomainModel?
 }

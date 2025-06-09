@@ -81,7 +81,6 @@ class AddEditTransactionViewModel @Inject constructor(
                     transactionState = UIState.Loading
                 )
             }
-            delay(10000)
             try {
                 addTransactionUseCase(uiState.value.transactionUi.toDomain())
                 setState {

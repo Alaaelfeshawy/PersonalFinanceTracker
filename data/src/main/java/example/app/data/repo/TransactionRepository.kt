@@ -13,11 +13,11 @@ class TransactionRepository @Inject constructor(
     private val transactionDao: TransactionDao
 ): ITransactionRepository {
     override fun getAllTransactions(): Flow<List<TransactionDomainModel>> {
-       return transactionDao.getAllTransactions().map { list ->
+      return transactionDao.getAllTransactions().map { list ->
             list.map { it.toDomain() }
         }
-    }
 
+    }
 
     override suspend fun addTransaction(transaction: TransactionDomainModel) =
         transactionDao.insertTransaction(transaction.toEntity())
@@ -27,5 +27,9 @@ class TransactionRepository @Inject constructor(
 
     override suspend fun editTransaction(transaction: TransactionDomainModel) {
         transactionDao.updateTransaction(transaction.toEntity())
+    }
+
+   override suspend fun getTransaction(id: Long?): TransactionDomainModel?{
+        return transactionDao.getTransactionById(id)?.toDomain()
     }
 }

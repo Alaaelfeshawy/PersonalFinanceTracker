@@ -22,3 +22,14 @@ fun TransactionUi.toDomain():TransactionDomainModel{
     )
 }
 
+fun TransactionDomainModel.toUI():TransactionUi{
+    return TransactionUi(
+        id = id,
+        amount = amount,
+        category = category?.toUi()?.toUIModel(),
+        type = type?.toUi(),
+        date =date,
+        notes = note,
+    )
+}
+

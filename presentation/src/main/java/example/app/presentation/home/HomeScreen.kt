@@ -1,22 +1,29 @@
 package example.app.presentation.home
 
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Shop
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.LocalLifecycleOwner
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import example.app.presentation.R
+import example.app.presentation.base.UIState
+import example.app.presentation.components.ErrorDialog
+import example.app.presentation.components.LoadingDialog
 import example.app.presentation.components.TopBar
 import example.app.presentation.components.TransactionItem
-import example.app.presentation.model.Category
-import example.app.presentation.model.CategoryUIModel
-import example.app.presentation.model.TransactionType
-import example.app.presentation.model.TransactionUi
 
 @Composable
 fun HomeScreen(
@@ -25,19 +32,14 @@ fun HomeScreen(
     onTransactionClicked : (Long) -> Unit = {}
 ) {
 
-    val transactions = listOf(
-    TransactionUi(id = null, amount = "1.02", CategoryUIModel(
-        category = Category.Shopping,
-        title = "Groceries",
-        image = Icons.Default.Shop
-    ) , "150", "2025-06-01", TransactionType.EXPENSE),
-        TransactionUi(id = null, amount = "1.2", CategoryUIModel(
-        category = Category.Shopping,
-        title = "Groceries",
-        image = Icons.Default.Shop
-    ) , "150", "2025-06-01", TransactionType.EXPENSE),
+    val viewModel = hiltViewModel<HomeViewModel>()
+    val state = viewModel.uiState.collectAsStateWithLifecycle().value
+    val lifecycle = LocalLifecycleOwner.current
 
-)
+    LaunchedEffect(lifecycle) {
+        viewModel.setEvent(HomeEvents.GetTransactions)
+    }
+
     Scaffold(
         floatingActionButton = {
             FloatingActionButton(onClick = onAddClick) {
@@ -45,18 +47,39 @@ fun HomeScreen(
             }
         },
         topBar = {
-            TopBar("Home")
+            TopBar(stringResource(R.string.home))
         }
     ) { padding ->
-        LazyColumn(modifier = Modifier.padding(padding)) {
-            items(transactions.size) { index ->
-                TransactionItem(
-                    transaction = transactions[index],
-                    onEditClick = { transactions[index].id?.let { onEditClick(it) } },
-                    onDeleteClick = { },
-                    onTransactionClicked = onTransactionClicked
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(padding),
+        ){
+            if (state.transactionState is UIState.Loading){
+                LoadingDialog()
+            }
+
+            if (state.transactionState is UIState.Error){
+                ErrorDialog(
+                    message = state.transactionState.error,
                 )
             }
+
+            if (state.transactionState is UIState.Success){
+                LazyColumn {
+                    items(state.transactionState.data ?: emptyList()){ transaction ->
+                        TransactionItem(
+                            transaction = transaction,
+                            onEditClick = { transaction.id?.let { onEditClick(it) } },
+                            onDeleteClick = {
+                                viewModel.setEvent(HomeEvents.RemoveTransaction(transaction))
+                            },
+                            onTransactionClicked = onTransactionClicked
+                        )
+                    }
+                }
+            }
+
         }
     }
 }
