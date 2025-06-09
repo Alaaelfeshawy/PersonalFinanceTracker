@@ -11,4 +11,15 @@
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
     <string name="monthly_budget_overview">Monthly Budget Overview</string>
+    <string name="home">Home</string>
+    <string name="date">"Date: "</string>
+    <string name="note">"Note: "</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
+    <string name="transaction_details">Transaction Details</string>
+    <string name="category">Category</string>
+    <string name="type">Type</string>
+    <string name="payment_method">Payment Method</string>
+    <string name="notes">Notes</string>
+    <string name="cash">Cash</string>
 </resources>

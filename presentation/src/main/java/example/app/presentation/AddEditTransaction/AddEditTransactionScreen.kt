@@ -24,15 +24,18 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import example.app.presentation.R
+import example.app.presentation.base.UIState
 import example.app.presentation.components.CategoryDropdown
 import example.app.presentation.components.DatePickerDocked
+import example.app.presentation.components.ErrorDialog
+import example.app.presentation.components.LoadingDialog
 import example.app.presentation.components.SegmentedButton
 import example.app.presentation.components.TopBar
 import example.app.presentation.model.categories
 
 @Composable
 fun AddEditTransactionScreen(
-    transactionId : String?=null,
+    transactionId : Long?=null,
     onBackClick: () -> Unit,
 ) {
     val viewModel = hiltViewModel<AddEditTransactionViewModel>()
@@ -59,6 +62,16 @@ fun AddEditTransactionScreen(
                 .padding(24.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
+            if (state.transactionState is UIState.Loading){
+                LoadingDialog()
+            }
+
+            if (state.transactionState is UIState.Error){
+                ErrorDialog(
+                    message = state.transactionState.error,
+                )
+            }
+
             SegmentedButton(
                 options = state.options,
                 selectedOption = state.transactionUi.type,
@@ -68,22 +81,15 @@ fun AddEditTransactionScreen(
             )
 
             OutlinedTextField(
-                value = state.transactionUi.title.orEmpty(),
-                onValueChange = {viewModel.setEvent(AddEditTransactionEvents.UpdateTitle(it))},
-                label = { Text(stringResource(R.string.title)) },
-                modifier = Modifier.fillMaxWidth()
-            )
-
-            OutlinedTextField(
                 value = state.transactionUi.amount.orEmpty(),
                 onValueChange = {viewModel.setEvent(AddEditTransactionEvents.UpdateAmount(it))},
                 label = { Text(stringResource(R.string.amount)) },
-                keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number),
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                 modifier = Modifier.fillMaxWidth()
             )
 
             CategoryDropdown(
-                categories = categories,
+                categories =categories,
                 selectedCategory = state.transactionUi.category,
                 onCategorySelected = {
                     viewModel.setEvent(AddEditTransactionEvents.UpdateCategory(it))
@@ -122,8 +128,9 @@ fun AddEditTransactionScreen(
     }
 }
 
+
 @Composable
-fun getTitle(transactionId : String?) : String{
+fun getTitle(transactionId : Long?) : String{
    return if (transactionId != null) "Edit Transaction" else
        stringResource(R.string.add_transaction)
 }

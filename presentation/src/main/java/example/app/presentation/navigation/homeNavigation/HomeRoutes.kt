@@ -12,12 +12,12 @@ sealed interface HomeRoutes {
 
     @Serializable
     data class TransactionDetails(
-        val transactionId:String
+        val transactionId:Long
 
     ): HomeRoutes
 
     @Serializable
     data class EditTransaction(
-        val transactionId:String
+        val transactionId:Long
     ) : HomeRoutes
 }

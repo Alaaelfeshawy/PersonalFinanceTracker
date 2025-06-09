@@ -27,7 +27,7 @@ fun NavGraphBuilder.HomeNavHost(
             val transactionId = backStackEntry.toRoute<HomeRoutes.EditTransaction>().transactionId
 
             AddEditTransactionScreen(
-                transactionId = null,
+                transactionId = transactionId,
                 onBackClick = {
                     navController.popBackStack()
 
@@ -40,7 +40,6 @@ fun NavGraphBuilder.HomeNavHost(
             TransactionDetailsScreen(
                 transactionId = transactionId,
                 onBackClick = { navController.popBackStack() },
-                onDeleteClick = {},
                 onEditClick = {
                     navController.navigate(HomeRoutes.EditTransaction(transactionId))
                 },
