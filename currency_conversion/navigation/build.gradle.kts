@@ -1,11 +1,12 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.compose)
     kotlin("plugin.serialization")
 }
 
 android {
-    namespace = "example.app.navigation"
+    namespace = "example.app.currency_conversion.navigation"
     compileSdk = 35
 
     defaultConfig {

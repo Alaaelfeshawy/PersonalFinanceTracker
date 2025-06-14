@@ -1,19 +1,16 @@
 package currency_conversion.app.main
 
 import androidx.compose.runtime.Composable
-import androidx.navigation.NavController
-import example.app.currencu_version.presentation.screen.CurrencyConverterScreen
+import example.app.currency_conversion.navigation.CurrencyConversionNavHost
 
 interface CurrencyNavigationContract {
-    fun screen(navController: NavController): @Composable () -> Unit
+    fun screen(): @Composable () -> Unit
 }
 
 object CurrencyPlugin : CurrencyNavigationContract {
 
-    override fun screen(navController: NavController): @Composable () -> Unit = {
-        CurrencyConverterScreen(
-            onNavigateBack = { navController.popBackStack() }
-        )
+    override fun screen(): @Composable () -> Unit = {
+        CurrencyConversionNavHost()
     }
 
 }

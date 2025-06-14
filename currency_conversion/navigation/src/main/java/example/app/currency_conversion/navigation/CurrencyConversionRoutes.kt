@@ -1,4 +1,4 @@
-package currency_conversion.app.main
+package example.app.currency_conversion.navigation
 
 import kotlinx.serialization.Serializable
 
@@ -6,7 +6,4 @@ import kotlinx.serialization.Serializable
 sealed interface CurrencyConversionRoutes{
     @Serializable
     data object CurrencyConversionScreen : CurrencyConversionRoutes
-    @Serializable
-    data object CurrencyConversionScreens : CurrencyConversionRoutes
 }
-

@@ -9,7 +9,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.createGraph
-import currency_conversion.app.main.CurrencyConversionRoutes
 import currency_conversion.app.main.CurrencyPlugin
 import example.app.presentation.Statistics.BudgetScreen
 import example.app.presentation.home.HomeScreen
@@ -48,7 +47,7 @@ fun AppNavigator() {
                     )
                 }
                 composable<MainDashboardRoutes.ExchangeRate> {
-                    CurrencyPlugin.screen(navController).invoke()
+                    CurrencyPlugin.screen().invoke()
                 }
                 homeNavHost(navController)
                 composable<MainDashboardRoutes.BudgetPlanning> {
