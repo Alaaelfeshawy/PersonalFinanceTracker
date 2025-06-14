@@ -47,7 +47,6 @@ class ExchangeRateApiAdapter (
         to: String,
         amount: String
     ): ExchangeRateDomainModel {
-        throw Exception("Something went wrong ")
        return when(val response = dataSource.exchangeRate(
            from, to, amount
        )){
