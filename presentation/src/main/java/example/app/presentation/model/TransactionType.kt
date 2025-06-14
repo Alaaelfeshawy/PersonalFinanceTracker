@@ -1,6 +1,6 @@
 package example.app.presentation.model
 
-import example.app.domain.model.TransactionTypeDomainModel
+import example.app.model.TransactionTypeDomainModel
 
 enum class TransactionType(val value : String) {
     INCOME("Income"),

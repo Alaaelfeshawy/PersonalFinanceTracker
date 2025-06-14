@@ -9,7 +9,7 @@ import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Nightlife
 import androidx.compose.material.icons.filled.Shop
 import androidx.compose.ui.graphics.vector.ImageVector
-import example.app.domain.model.CategoryDomainModel
+import example.app.model.CategoryDomainModel
 
 class CategoryUIModel(
     val category : Category,

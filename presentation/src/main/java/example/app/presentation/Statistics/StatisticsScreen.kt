@@ -29,7 +29,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import example.app.presentation.R
-import example.app.presentation.components.TopBar
+import example.app.base.ui.components.TopBar
 import example.app.presentation.model.Budget
 
 @Composable

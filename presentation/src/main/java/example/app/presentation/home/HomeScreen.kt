@@ -18,17 +18,18 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import example.app.base.ui.UIState
 import example.app.presentation.R
-import example.app.presentation.base.UIState
-import example.app.presentation.components.ErrorDialog
-import example.app.presentation.components.LoadingDialog
-import example.app.presentation.components.TopBar
+import example.app.base.ui.components.ErrorDialog
+import example.app.base.ui.components.LoadingDialog
+import example.app.base.ui.components.TopBar
 import example.app.presentation.components.TransactionItem
 
 @Composable
 fun HomeScreen(
     onEditClick : (Long) -> Unit = {},
     onAddClick : () -> Unit = {},
+    onExchangeRate : () -> Unit = {},
     onTransactionClicked : (Long) -> Unit = {}
 ) {
 
@@ -74,7 +75,8 @@ fun HomeScreen(
                             onDeleteClick = {
                                 viewModel.setEvent(HomeEvents.RemoveTransaction(transaction))
                             },
-                            onTransactionClicked = onTransactionClicked
+                            onTransactionClicked = onTransactionClicked,
+                            onExchangeRate = onExchangeRate
                         )
                     }
                 }

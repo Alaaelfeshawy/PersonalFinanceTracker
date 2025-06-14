@@ -1,13 +1,12 @@
 package example.app.presentation.Details
 
 import dagger.hilt.android.lifecycle.HiltViewModel
-import example.app.domain.di.dispatchers.qualifiers.IODispatcher
-import example.app.domain.usecase.GetAllTransactionsUseCase
-import example.app.domain.usecase.GetTransactionUseCase
-import example.app.domain.usecase.RemoveTransactionUseCase
-import example.app.presentation.base.BaseViewModel
-import example.app.presentation.base.UIEvent
-import example.app.presentation.base.UIState
+import example.app.base.ui.BaseViewModel
+import example.app.base.ui.UIEvent
+import example.app.base.ui.UIState
+import example.app.di.qualifiers.IODispatcher
+import example.app.usecase.GetTransactionUseCase
+import example.app.usecase.RemoveTransactionUseCase
 import example.app.presentation.model.TransactionUi
 import example.app.presentation.model.toDomain
 import example.app.presentation.model.toUI
@@ -24,7 +23,7 @@ class DetailsViewModel @Inject constructor(
     private val getTransactionUseCase : GetTransactionUseCase,
     private val removeTransactionUseCase : RemoveTransactionUseCase,
     @IODispatcher private val coroutineDispatcher: CoroutineDispatcher,
-): BaseViewModel<DetailsState,DetailsEvents>(coroutineDispatcher){
+): BaseViewModel<DetailsState, DetailsEvents>(coroutineDispatcher){
 
     override fun createInitialState(): DetailsState = DetailsState()
 

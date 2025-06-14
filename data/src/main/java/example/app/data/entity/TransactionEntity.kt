@@ -2,9 +2,9 @@ package example.app.data.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import example.app.domain.model.CategoryDomainModel
-import example.app.domain.model.TransactionDomainModel
-import example.app.domain.model.TransactionTypeDomainModel
+import example.app.model.CategoryDomainModel
+import example.app.model.TransactionDomainModel
+import example.app.model.TransactionTypeDomainModel
 
 @Entity(tableName = "transactions")
 data class TransactionEntity(

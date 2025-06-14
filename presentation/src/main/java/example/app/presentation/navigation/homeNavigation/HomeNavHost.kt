@@ -9,10 +9,7 @@ import example.app.presentation.AddEditTransaction.AddEditTransactionScreen
 import example.app.presentation.Details.TransactionDetailsScreen
 
 
-fun NavGraphBuilder.HomeNavHost(
-    navController: NavController,
-
-    ) {
+fun NavGraphBuilder.homeNavHost(navController: NavController) {
     navigation<HomeRoutes.HomeScreens>(startDestination = HomeRoutes.AddTransaction) {
         composable<HomeRoutes.AddTransaction> {
             AddEditTransactionScreen(

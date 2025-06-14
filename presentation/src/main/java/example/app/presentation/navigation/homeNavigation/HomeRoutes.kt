@@ -13,7 +13,6 @@ sealed interface HomeRoutes {
     @Serializable
     data class TransactionDetails(
         val transactionId:Long
-
     ): HomeRoutes
 
     @Serializable

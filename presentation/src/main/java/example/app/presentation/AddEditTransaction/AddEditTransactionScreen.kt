@@ -23,14 +23,14 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import example.app.base.ui.UIState
+import example.app.base.ui.components.ErrorDialog
+import example.app.base.ui.components.LoadingDialog
+import example.app.base.ui.components.TopBar
 import example.app.presentation.R
-import example.app.presentation.base.UIState
 import example.app.presentation.components.CategoryDropdown
 import example.app.presentation.components.DatePickerDocked
-import example.app.presentation.components.ErrorDialog
-import example.app.presentation.components.LoadingDialog
 import example.app.presentation.components.SegmentedButton
-import example.app.presentation.components.TopBar
 import example.app.presentation.model.categories
 
 @Composable

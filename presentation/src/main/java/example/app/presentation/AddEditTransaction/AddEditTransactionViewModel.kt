@@ -1,19 +1,15 @@
 package example.app.presentation.AddEditTransaction
 
 import dagger.hilt.android.lifecycle.HiltViewModel
-import example.app.domain.di.dispatchers.qualifiers.IODispatcher
-import example.app.domain.usecase.AddTransactionUseCase
-import example.app.domain.usecase.GetTransactionUseCase
-import example.app.presentation.Details.DetailsEvents
-import example.app.presentation.base.BaseViewModel
-import example.app.presentation.base.UIEvent
-import example.app.presentation.base.UIState
-import example.app.presentation.model.TransactionUi
-import example.app.presentation.model.toCategory
+import example.app.base.ui.BaseViewModel
+import example.app.base.ui.UIEvent
+import example.app.base.ui.UIState
+import example.app.di.qualifiers.IODispatcher
+import example.app.usecase.AddTransactionUseCase
+import example.app.usecase.GetTransactionUseCase
 import example.app.presentation.model.toDomain
 import example.app.presentation.model.toUI
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.onStart
@@ -27,7 +23,7 @@ class AddEditTransactionViewModel @Inject constructor(
     private val getTransactionUseCase : GetTransactionUseCase,
     private val addTransactionUseCase : AddTransactionUseCase,
     @IODispatcher private val coroutineDispatcher: CoroutineDispatcher,
-): BaseViewModel<AddEditTransactionState,AddEditTransactionEvents>(coroutineDispatcher){
+): BaseViewModel<AddEditTransactionState, AddEditTransactionEvents>(coroutineDispatcher){
 
     override fun createInitialState(): AddEditTransactionState = AddEditTransactionState()
 

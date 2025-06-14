@@ -1,8 +1,8 @@
 package example.app.presentation.Details
 
-import example.app.presentation.base.UIEvent
-import example.app.presentation.base.UIState
-import example.app.presentation.base.ViewState
+import example.app.base.ui.UIEvent
+import example.app.base.ui.UIState
+import example.app.base.ui.ViewState
 import example.app.presentation.model.TransactionUi
 
 data class DetailsState(
