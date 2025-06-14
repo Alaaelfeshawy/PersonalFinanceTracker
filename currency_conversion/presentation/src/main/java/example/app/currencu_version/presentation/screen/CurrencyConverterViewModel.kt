@@ -7,15 +7,16 @@ import example.app.base.ui.UIState
 import example.app.currency_conversion.domain.qualifiers.IODispatcher
 import example.app.currency_conversion.domain.usecase.GetAvailableCurrenciesUseCase
 import example.app.currencu_version.presentation.model.toUI
+import example.app.currency_conversion.domain.usecase.GetExchangeRateUseCase
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.onStart
 import javax.inject.Inject
 
 @HiltViewModel
 class CurrencyConverterViewModel @Inject constructor(
     private val getAvailableCurrenciesUseCase: GetAvailableCurrenciesUseCase,
+    private val getExchangeRateUseCase: GetExchangeRateUseCase,
     @IODispatcher private val coroutineDispatcher: CoroutineDispatcher,
 
     ) : BaseViewModel<CurrencyConverterState, CurrencyConverterEvent>(coroutineDispatcher){
@@ -24,8 +25,8 @@ class CurrencyConverterViewModel @Inject constructor(
 
     override fun handleEvent(uiEvent: UIEvent) {
       when(uiEvent){
-          is CurrencyConverterEvent.GetExchangeRate -> {
-              getExchangeRate()
+          is CurrencyConverterEvent.GetAvailableCurrencies -> {
+              getAvailableCurrencies()
           }
           is CurrencyConverterEvent.SetAmount -> {
               setState {
@@ -33,30 +34,94 @@ class CurrencyConverterViewModel @Inject constructor(
                       amount = uiEvent.amount
                   )
               }
+              getExchangeRate()
+
           }
+          is CurrencyConverterEvent.SetSelectedFromCurrency -> {
+              setState {
+                  copy(
+                      fromSelectedCurrency = uiEvent.currency
+                  )
+              }
+              getExchangeRate()
+
+          }
+          is CurrencyConverterEvent.SetSelectedToCurrency -> {
+              setState {
+                  copy(
+                      toSelectedCurrency = uiEvent.currency
+                  )
+              }
+              getExchangeRate()
+
+          }
+
+          is CurrencyConverterEvent.OnSwapCurrencies -> {
+              setState {
+                  copy(
+                      toSelectedCurrency = uiState.value.fromSelectedCurrency,
+                      fromSelectedCurrency =uiState.value.toSelectedCurrency
+                  )
+              }
+              getExchangeRate()
+          }
+
       }
     }
 
-    private fun getExchangeRate(){
+    private fun getExchangeRate()
+    {
+        launchCoroutineScope {
+            getExchangeRateUseCase(
+                to = uiState.value.toSelectedCurrency.orEmpty(),
+                from =uiState.value.fromSelectedCurrency.orEmpty(),
+                amount = uiState.value.amount.orEmpty()
+            )
+                .onStart {
+                    setState {
+                        copy(
+                            exchangeRateState = UIState.Loading
+                        )
+                    }
+                }.catch {
+                    setState {
+                        copy(
+                            exchangeRateState = UIState.Error(it.message.orEmpty())
+                        )
+                    }
+                }.collect { domain ->
+                    val response = domain.toUI()
+                    setState {
+                        copy(exchangeRateState = UIState.Success(response))
+                    }
+                }
+        }
+
+    }
+
+    private fun getAvailableCurrencies(){
         launchCoroutineScope {
             getAvailableCurrenciesUseCase()
                     .onStart {
                         setState {
                             copy(
-                                exchangeRateState = UIState.Loading
+                                currencyState = UIState.Loading
                             )
                         }
                     }.catch {
                         setState {
                             copy(
-                                exchangeRateState = UIState.Error(it.message.orEmpty())
+                                currencyState = UIState.Error(it.message.orEmpty())
                             )
                         }
                     }.collect { domain ->
                         val response = domain.toUI()
                         setState {
                             copy(
-                                exchangeRateState = UIState.Success(response)
+                                currencyState = UIState.Success(response),
+                                fromSelectedCurrency = response.currencies.keys.toList().find { it == "EGP" },
+                                toSelectedCurrency = response.currencies.keys.toList().find { it == "USD" },
+
                             )
                         }
                     }

@@ -1,19 +1,48 @@
 package example.app.currencu_version.presentation.model
 
-import androidx.compose.runtime.Stable
-import example.app.currency_conversion.domain.model.CurrenciesDomainModel
+import example.app.currency_conversion.domain.model.ExchangeRateDomainModel
+import example.app.currency_conversion.domain.model.InfoDomainModel
+import example.app.currency_conversion.domain.model.QueryDomainModel
 
-@Stable
 data class ExchangeRateUiModel(
-    val id : Long?=null,
+    val info: InfoUiModel?,
+    val query: QueryUiModel?,
+    val result: Double,
     val success: Boolean,
-    val currencies: Map<String,String>,
 )
 
-fun CurrenciesDomainModel.toUI() : ExchangeRateUiModel {
+data class InfoUiModel(
+    val quote: Double,
+    val timestamp: Int
+)
+
+data class QueryUiModel(
+    val amount: Int,
+    val from: String,
+    val to: String
+)
+
+
+fun ExchangeRateDomainModel.toUI() : ExchangeRateUiModel {
     return ExchangeRateUiModel(
-        id = id,
-        success= success,
-        currencies = currencies
+        info = info?.toDomain(),
+        query = query?.toDomain(),
+        result = result,
+        success = success
+    )
+}
+
+fun InfoDomainModel.toDomain() : InfoUiModel {
+    return InfoUiModel(
+        quote = quote,
+        timestamp = timestamp
+    )
+}
+
+fun QueryDomainModel.toDomain() : QueryUiModel {
+    return QueryUiModel(
+        amount = amount,
+        from = from,
+        to = to
     )
 }

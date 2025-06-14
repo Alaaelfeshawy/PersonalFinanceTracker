@@ -21,48 +21,43 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import java.util.Currency
 
-//@Composable
-//fun CurrencySelectionRow(
-//    label: String,
-//    currency: Currency,
-//    onClick: () -> Unit,
-//    modifier: Modifier = Modifier
-//) {
-//    Row(
-//        modifier = modifier
-//            .fillMaxWidth()
-//            .clickable(onClick = onClick)
-//            .padding(vertical = 8.dp),
-//        verticalAlignment = Alignment.CenterVertically,
-//        horizontalArrangement = Arrangement.SpaceBetween
-//    ) {
-//        Text(
-//            text = label,
-//            style = MaterialTheme.typography.bodyLarge,
-//            modifier = Modifier.weight(1f)
-//        )
-//
-//        Row(
-//            verticalAlignment = Alignment.CenterVertically,
-//            horizontalArrangement = Arrangement.End,
-//            modifier = Modifier.weight(1f)
-//        ) {
-//            Text(
-//                text = currency.code,
-//                style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold)
-//            )
-//            Spacer(modifier = Modifier.width(8.dp))
-//            Text(
-//                text = currency.name,
-//                style = MaterialTheme.typography.bodyMedium,
-//                maxLines = 1,
-//                overflow = TextOverflow.Ellipsis
-//            )
-//            Icon(
-//                imageVector = Icons.Default.ArrowForward,
-//                contentDescription = "Select currency",
-//                modifier = Modifier.size(16.dp)
-//            )
-//        }
-//    }
-//}
+@Composable
+fun CurrencySelectionRow(
+    label: String,
+    currency: String,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Row(
+        modifier = modifier
+            .fillMaxWidth()
+            .clickable(onClick = onClick)
+            .padding(vertical = 8.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        Text(
+            text = label,
+            style = MaterialTheme.typography.bodyLarge,
+            modifier = Modifier.weight(1f)
+        )
+
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.End,
+            modifier = Modifier.weight(1f)
+        ) {
+            Text(
+                text = currency,
+                style = MaterialTheme.typography.bodyMedium,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
+            )
+            Icon(
+                imageVector = Icons.Default.ArrowForward,
+                contentDescription = "Select currency",
+                modifier = Modifier.size(16.dp)
+            )
+        }
+    }
+}

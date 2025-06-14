@@ -1,10 +1,12 @@
 package example.app.data.adapter
 
 import example.app.currency_conversion.domain.model.CurrenciesDomainModel
+import example.app.currency_conversion.domain.model.ExchangeRateDomainModel
 import example.app.currency_conversion.domain.ports.CurrencyDataStorePort
 import example.app.currency_conversion.domain.ports.ExchangeRateProviderPort
 import example.app.data.api.datasource.IRemoteDataSource
 import example.app.data.api.validate.ApiResult
+import example.app.data.model.toDomain
 
 class ExchangeRateApiAdapter (
    private val dataSource: IRemoteDataSource,
@@ -36,6 +38,23 @@ class ExchangeRateApiAdapter (
 
         } catch (e: Exception) {
            throw Exception(e)
+        }
+    }
+
+    override suspend fun exchangeRate(
+        from: String,
+        to: String,
+        amount: String
+    ): ExchangeRateDomainModel {
+       return when(val response = dataSource.exchangeRate(
+           from, to, amount
+       )){
+            is ApiResult.Error -> {
+                throw Exception(response.exception)
+            }
+            is ApiResult.Success -> {
+                return response.data.toDomain()
+            }
         }
     }
 }

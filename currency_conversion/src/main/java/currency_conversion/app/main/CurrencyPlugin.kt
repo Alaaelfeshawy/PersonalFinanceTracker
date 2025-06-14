@@ -12,7 +12,6 @@ object CurrencyPlugin : CurrencyNavigationContract {
 
     override fun screen(navController: NavController): @Composable () -> Unit = {
         CurrencyConverterScreen(
-            onNavigateToCurrencySelection = {},
             onNavigateBack = { navController.popBackStack() }
         )
     }
