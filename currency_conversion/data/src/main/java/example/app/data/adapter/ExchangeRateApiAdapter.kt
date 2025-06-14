@@ -8,7 +8,6 @@ import example.app.data.api.datasource.IRemoteDataSource
 import example.app.data.api.validate.ApiResult
 import example.app.data.model.toDomain
 
-@Suppress("UNREACHABLE_CODE")
 class ExchangeRateApiAdapter (
    private val dataSource: IRemoteDataSource,
    private val currencyDataStorePort : CurrencyDataStorePort
@@ -54,7 +53,7 @@ class ExchangeRateApiAdapter (
                 throw Exception(response.exception)
             }
             is ApiResult.Success -> {
-                return response.data.toDomain()
+                 response.data.toDomain()
             }
         }
     }
