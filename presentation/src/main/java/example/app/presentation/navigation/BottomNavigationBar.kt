@@ -2,6 +2,7 @@ package example.app.presentation.navigation
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.BarChart
+import androidx.compose.material.icons.filled.CurrencyPound
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.MoreHoriz
 import androidx.compose.material3.Icon
@@ -30,10 +31,15 @@ fun BottomNavigationBar(navController: NavController) {
             route = MainDashboardRoutes.BudgetPlanning
         ),
         NavigationItem(
+            title = "Exchange Rate",
+            icon =Icons.Default.CurrencyPound,
+            route = MainDashboardRoutes.ExchangeRate
+        ),
+        NavigationItem(
             title = "More",
             icon = Icons.Filled.MoreHoriz,
             route = MainDashboardRoutes.Settings
-        )
+        ),
     )
     val selectedNavigationIndex = rememberSaveable {
         mutableIntStateOf(0)

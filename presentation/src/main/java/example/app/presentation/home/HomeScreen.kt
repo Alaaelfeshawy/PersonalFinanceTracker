@@ -29,7 +29,6 @@ import example.app.presentation.components.TransactionItem
 fun HomeScreen(
     onEditClick : (Long) -> Unit = {},
     onAddClick : () -> Unit = {},
-    onExchangeRate : () -> Unit = {},
     onTransactionClicked : (Long) -> Unit = {}
 ) {
 
@@ -76,7 +75,6 @@ fun HomeScreen(
                                 viewModel.setEvent(HomeEvents.RemoveTransaction(transaction))
                             },
                             onTransactionClicked = onTransactionClicked,
-                            onExchangeRate = onExchangeRate
                         )
                     }
                 }

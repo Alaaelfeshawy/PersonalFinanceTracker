@@ -30,7 +30,6 @@ fun TransactionItem(
     transaction: TransactionUi,
     onEditClick: () -> Unit,
     onDeleteClick: () -> Unit,
-    onExchangeRate: () -> Unit,
     onTransactionClicked: (Long) -> Unit
 ) {
     Card(
@@ -69,9 +68,6 @@ fun TransactionItem(
                 }
                 IconButton(onClick = onDeleteClick) {
                     Icon(Icons.Default.Delete, contentDescription = stringResource(R.string.delete))
-                }
-                IconButton(onClick = onExchangeRate) {
-                    Icon(Icons.Default.CurrencyPound, contentDescription = "Exchange rates")
                 }
             }
         }

@@ -9,6 +9,7 @@ import example.app.currency_conversion.domain.usecase.GetAvailableCurrenciesUseC
 import example.app.currencu_version.presentation.model.toUI
 import example.app.currency_conversion.domain.usecase.GetExchangeRateUseCase
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.onStart
 import javax.inject.Inject
@@ -83,6 +84,7 @@ class CurrencyConverterViewModel @Inject constructor(
                             exchangeRateState = UIState.Loading
                         )
                     }
+                    delay(100)
                 }.catch {
                     setState {
                         copy(

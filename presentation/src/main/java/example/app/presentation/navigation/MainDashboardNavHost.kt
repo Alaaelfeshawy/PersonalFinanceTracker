@@ -45,12 +45,9 @@ fun AppNavigator() {
                             navController.navigate(HomeRoutes.TransactionDetails(transactionId))
 
                         },
-                        onExchangeRate = {
-                            navController.navigate(CurrencyConversionRoutes.CurrencyConversionScreen)
-                        }
                     )
                 }
-                composable<CurrencyConversionRoutes.CurrencyConversionScreen> {
+                composable<MainDashboardRoutes.ExchangeRate> {
                     CurrencyPlugin.screen(navController).invoke()
                 }
                 homeNavHost(navController)
