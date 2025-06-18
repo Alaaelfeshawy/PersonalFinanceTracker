@@ -10,7 +10,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.createGraph
 import currency_conversion.app.main.CurrencyPlugin
-import example.app.presentation.Statistics.BudgetScreen
+import example.app.presentation.statistics.BudgetScreen
 import example.app.presentation.home.HomeScreen
 import example.app.presentation.navigation.homeNavigation.HomeRoutes
 import example.app.presentation.navigation.homeNavigation.homeNavHost

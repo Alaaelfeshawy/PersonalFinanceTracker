@@ -1,4 +1,4 @@
-package example.app.presentation.AddEditTransaction
+package example.app.presentation.addEditTransaction
 
 import dagger.hilt.android.lifecycle.HiltViewModel
 import example.app.base.ui.BaseViewModel

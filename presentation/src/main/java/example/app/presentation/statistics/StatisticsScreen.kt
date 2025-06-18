@@ -1,4 +1,4 @@
-package example.app.presentation.Statistics
+package example.app.presentation.statistics
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background

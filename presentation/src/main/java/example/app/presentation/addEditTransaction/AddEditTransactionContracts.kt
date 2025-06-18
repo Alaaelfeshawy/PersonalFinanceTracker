@@ -1,4 +1,4 @@
-package example.app.presentation.AddEditTransaction
+package example.app.presentation.addEditTransaction
 
 import example.app.base.ui.UIEvent
 import example.app.base.ui.UIState

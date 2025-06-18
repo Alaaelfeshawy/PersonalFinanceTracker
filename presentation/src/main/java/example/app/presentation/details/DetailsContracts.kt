@@ -1,4 +1,4 @@
-package example.app.presentation.Details
+package example.app.presentation.details
 
 import example.app.base.ui.UIEvent
 import example.app.base.ui.UIState

@@ -5,8 +5,8 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.toRoute
-import example.app.presentation.AddEditTransaction.AddEditTransactionScreen
-import example.app.presentation.Details.TransactionDetailsScreen
+import example.app.presentation.addEditTransaction.AddEditTransactionScreen
+import example.app.presentation.details.TransactionDetailsScreen
 
 
 fun NavGraphBuilder.homeNavHost(navController: NavController) {

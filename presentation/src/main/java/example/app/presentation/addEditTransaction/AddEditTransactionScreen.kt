@@ -1,4 +1,4 @@
-package example.app.presentation.AddEditTransaction
+package example.app.presentation.addEditTransaction
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
