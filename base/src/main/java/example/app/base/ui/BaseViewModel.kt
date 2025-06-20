@@ -19,7 +19,7 @@ abstract class BaseViewModel< State : ViewState,Event : UIEvent>(private val cor
 
     abstract fun createInitialState(): State
 
-    abstract fun handleEvent(uiEvent: UIEvent)
+    abstract fun handleEvent(uiEvent: Event)
 
     private val initialState: State by lazy { createInitialState() }
 

@@ -24,54 +24,44 @@ class CurrencyConverterViewModel @Inject constructor(
 
     override fun createInitialState(): CurrencyConverterState = CurrencyConverterState()
 
-    override fun handleEvent(uiEvent: UIEvent) {
-      when(uiEvent){
-          is CurrencyConverterEvent.GetAvailableCurrencies -> {
-              getAvailableCurrencies()
-          }
-          is CurrencyConverterEvent.SetAmount -> {
-              setState {
-                  copy(
-                      amount = uiEvent.amount
-                  )
-              }
-              getExchangeRate()
+    override fun handleEvent(uiEvent: CurrencyConverterEvent) {
+        var needsExchangeRateUpdate = false
 
-          }
-          is CurrencyConverterEvent.SetSelectedFromCurrency -> {
-              setState {
-                  copy(
-                      fromSelectedCurrency = uiEvent.currency
-                  )
-              }
-              getExchangeRate()
+        when (uiEvent) {
+            is CurrencyConverterEvent.GetAvailableCurrencies -> {
+                getAvailableCurrencies()
+            }
+            is CurrencyConverterEvent.SetAmount -> {
+                setState { copy(amount = uiEvent.amount) }
+                needsExchangeRateUpdate = true
+            }
+            is CurrencyConverterEvent.SetSelectedFromCurrency -> {
+                setState { copy(fromSelectedCurrency = uiEvent.currency) }
+                needsExchangeRateUpdate = true
+            }
+            is CurrencyConverterEvent.SetSelectedToCurrency -> {
+                setState { copy(toSelectedCurrency = uiEvent.currency) }
+                needsExchangeRateUpdate = true
+            }
+            is CurrencyConverterEvent.OnSwapCurrencies -> {
+                val currentFrom = uiState.value.fromSelectedCurrency
+                val currentTo = uiState.value.toSelectedCurrency
+                setState {
+                    copy(
+                        toSelectedCurrency = currentFrom,
+                        fromSelectedCurrency = currentTo
+                    )
+                }
+                needsExchangeRateUpdate = true
+            }
+        }
 
-          }
-          is CurrencyConverterEvent.SetSelectedToCurrency -> {
-              setState {
-                  copy(
-                      toSelectedCurrency = uiEvent.currency
-                  )
-              }
-              getExchangeRate()
-
-          }
-
-          is CurrencyConverterEvent.OnSwapCurrencies -> {
-              setState {
-                  copy(
-                      toSelectedCurrency = uiState.value.fromSelectedCurrency,
-                      fromSelectedCurrency =uiState.value.toSelectedCurrency
-                  )
-              }
-              getExchangeRate()
-          }
-
-      }
+        if (needsExchangeRateUpdate) {
+            getExchangeRate()
+        }
     }
 
-    private fun getExchangeRate()
-    {
+    private fun getExchangeRate() {
         launchCoroutineScope {
             getExchangeRateUseCase(
                 to = uiState.value.toSelectedCurrency.orEmpty(),

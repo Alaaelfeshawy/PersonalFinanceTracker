@@ -30,7 +30,7 @@ class DetailsViewModel @Inject constructor(
     private val _navigate: MutableStateFlow<Boolean> = MutableStateFlow(false)
     val navigate = _navigate.asStateFlow()
 
-    override fun handleEvent(uiEvent: UIEvent) {
+    override fun handleEvent(uiEvent: DetailsEvents) {
       when(uiEvent){
           is DetailsEvents.RemoveTransaction -> {
               removeTransaction(uiEvent.model)

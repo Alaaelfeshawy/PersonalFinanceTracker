@@ -25,7 +25,7 @@ class HomeViewModel @Inject constructor(
 
     override fun createInitialState(): HomeState = HomeState()
 
-    override fun handleEvent(uiEvent: UIEvent) {
+    override fun handleEvent(uiEvent: HomeEvents) {
       when(uiEvent){
           is HomeEvents.RemoveTransaction -> {
               removeTransaction(uiEvent.model)

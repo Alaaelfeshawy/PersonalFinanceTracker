@@ -27,7 +27,7 @@ class AddEditTransactionViewModel @Inject constructor(
 
     override fun createInitialState(): AddEditTransactionState = AddEditTransactionState()
 
-    override fun handleEvent(uiEvent: UIEvent) {
+    override fun handleEvent(uiEvent: AddEditTransactionEvents) {
         when (uiEvent){
             is AddEditTransactionEvents.UpdateAmount -> {
                 setState {
