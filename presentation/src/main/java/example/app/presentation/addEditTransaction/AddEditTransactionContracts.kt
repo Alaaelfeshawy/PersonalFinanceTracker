@@ -16,21 +16,26 @@ data class AddEditTransactionState(
     )
 ): ViewState {
 
-    fun isSaveButtonEnabled (): Boolean {
-        return !transactionUi?.date.isNullOrEmpty()  &&
-                (!transactionUi?.amount.isNullOrEmpty() && (
-                        transactionUi?.amount?.toDouble() ?: 0.0) > 0.0 )  &&
-                transactionUi?.category != null &&
-                transactionUi.type != null
+    fun isSaveButtonEnabled(): Boolean {
+        val currentTransaction = transactionUi ?: return false
+        val isDateValid = !currentTransaction.date.isNullOrEmpty()
+        val isAmountValid = currentTransaction.amount?.let { amountString ->
+            amountString.isNotEmpty() && (amountString.toDoubleOrNull() ?: 0.0) > 0.0
+        } ?: false
+        val isCategorySelected = currentTransaction.category != null
+        val isTypeSelected = currentTransaction.type != null
+        return isDateValid && isAmountValid && isCategorySelected && isTypeSelected
     }
 }
 
 sealed class AddEditTransactionEvents : UIEvent {
-    data class UpdateAmount(val amount : String?) :AddEditTransactionEvents()
-    data class UpdateCategory(val category : CategoryUIModel) :AddEditTransactionEvents()
-    data class UpdateDate(val date : Long?) :AddEditTransactionEvents()
-    data class UpdateNotes(val notes : String) :AddEditTransactionEvents()
-    data class UpdateType(val type: TransactionType) :AddEditTransactionEvents()
+    data class UpdateTransactionDetails(
+        val amount: String? = null,
+        val category: CategoryUIModel? = null,
+        val date: Long? = null,
+        val notes: String? = null,
+        val type: TransactionType? = null
+    ) : AddEditTransactionEvents()
     data object SaveTransaction :AddEditTransactionEvents()
     data class GetTransactions(val id : Long?) :AddEditTransactionEvents()
 }

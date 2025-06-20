@@ -53,7 +53,11 @@ class ExchangeRateApiAdapter (
                 throw Exception(response.exception)
             }
             is ApiResult.Success -> {
-                 response.data.toDomain()
+                if (response.data.success == true){
+                    response.data.toDomain()
+                } else {
+                    throw Exception("Something went wrong")
+                }
             }
         }
     }

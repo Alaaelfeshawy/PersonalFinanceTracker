@@ -9,7 +9,12 @@ import example.app.usecase.AddTransactionUseCase
 import example.app.usecase.GetTransactionUseCase
 import example.app.presentation.model.toDomain
 import example.app.presentation.model.toUI
+import example.app.presentation.shared.NavEvent
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.onStart
@@ -25,45 +30,13 @@ class AddEditTransactionViewModel @Inject constructor(
     @IODispatcher private val coroutineDispatcher: CoroutineDispatcher,
 ): BaseViewModel<AddEditTransactionState, AddEditTransactionEvents>(coroutineDispatcher){
 
+    private val _navigate: MutableSharedFlow<NavEvent> = MutableSharedFlow()
+    val navigate = _navigate.asSharedFlow()
+
     override fun createInitialState(): AddEditTransactionState = AddEditTransactionState()
 
     override fun handleEvent(uiEvent: AddEditTransactionEvents) {
         when (uiEvent){
-            is AddEditTransactionEvents.UpdateAmount -> {
-                setState {
-                    copy(
-                        transactionUi = transactionUi?.copy(amount = uiEvent.amount)
-                    )
-                }
-            }
-            is AddEditTransactionEvents.UpdateCategory -> {
-                setState {
-                    copy(
-                        transactionUi = transactionUi?.copy(category = uiEvent.category)
-                    )
-                }
-            }
-            is AddEditTransactionEvents.UpdateDate -> {
-                setState {
-                    copy(
-                        transactionUi = transactionUi?.copy(date = convertMillisToDate(uiEvent.date))
-                    )
-                }
-            }
-            is AddEditTransactionEvents.UpdateNotes -> {
-                setState {
-                    copy(
-                        transactionUi = transactionUi?.copy(notes = uiEvent.notes)
-                    )
-                }
-            }
-            is AddEditTransactionEvents.UpdateType ->{
-                setState {
-                    copy(
-                        transactionUi = transactionUi?.copy(type = uiEvent.type)
-                    )
-                }
-            }
             is AddEditTransactionEvents.SaveTransaction -> {
                 saveTransaction()
             }
@@ -71,30 +44,41 @@ class AddEditTransactionViewModel @Inject constructor(
             is AddEditTransactionEvents.GetTransactions -> {
                 getTransaction(uiEvent.id)
             }
+
+            is AddEditTransactionEvents.UpdateTransactionDetails -> {
+                setState {
+                    copy(
+                        transactionUi = transactionUi?.copy(amount = uiEvent.amount ?: transactionUi.amount,
+                            category = uiEvent.category ?: transactionUi.category,
+                            date = uiEvent.date?.let { convertMillisToDate(it) } ?: transactionUi.date,
+                            notes = uiEvent.notes ?: transactionUi.notes,
+                            type = uiEvent.type ?: transactionUi.type
+                        )
+                    )
+                }
+            }
         }
     }
 
     private fun saveTransaction() {
         launchCoroutineScope{
-            setState {
-                copy(
-                    transactionState = UIState.Loading
-                )
-            }
-            try {
-                uiState.value.transactionUi?.toDomain()?.let { addTransactionUseCase(it) }
-                setState {
-                    copy(
-                        transactionState = UIState.Success(data =null)
-                    )
+            val request =  uiState.value.transactionUi?.toDomain() ?: return@launchCoroutineScope
+            addTransactionUseCase(request)
+                .onStart {
+                    setState {
+                        copy(
+                            transactionState = UIState.Loading
+                        )
+                    }
+                }.catch {
+                    setState {
+                        copy(
+                            transactionState = UIState.Error(it.message.orEmpty())
+                        )
+                    }
+                }.collectLatest {
+                    _navigate.emit(NavEvent.Navigate)
                 }
-            } catch (e: Exception) {
-                setState {
-                    copy(
-                        transactionState = UIState.Error(e.message.orEmpty())
-                    )
-                }
-            }
         }
     }
 

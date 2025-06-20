@@ -32,6 +32,8 @@ import example.app.presentation.components.CategoryDropdown
 import example.app.presentation.components.DatePickerDocked
 import example.app.presentation.components.SegmentedButton
 import example.app.presentation.model.categories
+import example.app.presentation.shared.NavEvent
+import kotlinx.coroutines.flow.collectLatest
 
 @Composable
 fun AddEditTransactionScreen(
@@ -45,6 +47,11 @@ fun AddEditTransactionScreen(
     LaunchedEffect(lifecycle) {
         if (transactionId != null){
             viewModel.setEvent(AddEditTransactionEvents.GetTransactions(transactionId))
+        }
+        viewModel.navigate.collectLatest {
+            when(it){
+                NavEvent.Navigate -> {onBackClick.invoke()}
+            }
         }
     }
 
@@ -78,13 +85,13 @@ fun AddEditTransactionScreen(
                 options = state.options,
                 selectedOption = state.transactionUi?.type,
                 onOptionSelected = {
-                    viewModel.setEvent(AddEditTransactionEvents.UpdateType(it))
+                    viewModel.setEvent(AddEditTransactionEvents.UpdateTransactionDetails(type = it))
                 }
             )
 
             OutlinedTextField(
                 value = state.transactionUi?.amount.orEmpty(),
-                onValueChange = {viewModel.setEvent(AddEditTransactionEvents.UpdateAmount(it))},
+                onValueChange = {viewModel.setEvent(AddEditTransactionEvents.UpdateTransactionDetails(amount = it))},
                 label = { Text(stringResource(R.string.amount)) },
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                 modifier = Modifier.fillMaxWidth()
@@ -94,20 +101,20 @@ fun AddEditTransactionScreen(
                 categories =categories,
                 selectedCategory = state.transactionUi?.category,
                 onCategorySelected = {
-                    viewModel.setEvent(AddEditTransactionEvents.UpdateCategory(it))
+                    viewModel.setEvent(AddEditTransactionEvents.UpdateTransactionDetails(category = it))
                 }
             )
 
             DatePickerDocked(
                 selectedDate = state.transactionUi?.date.orEmpty(),
                 onDateSelected ={
-                    viewModel.setEvent(AddEditTransactionEvents.UpdateDate(it))
+                    viewModel.setEvent(AddEditTransactionEvents.UpdateTransactionDetails(date = it))
                 }
             )
 
             OutlinedTextField(
                 value = state.transactionUi?.notes.orEmpty(),
-                onValueChange = {viewModel.setEvent(AddEditTransactionEvents.UpdateNotes(it))},
+                onValueChange = {viewModel.setEvent(AddEditTransactionEvents.UpdateTransactionDetails(notes = it))},
                 label = { Text(stringResource(R.string.notes_optional)) },
                 modifier = Modifier.fillMaxWidth()
             )
