@@ -1,6 +1,6 @@
 package example.app.presentation.model
 
-import example.app.domain.model.TransactionDomainModel
+import example.app.model.TransactionDomainModel
 
 data class TransactionUi(
     val id: Long?=null,
@@ -11,7 +11,7 @@ data class TransactionUi(
     val type: TransactionType?=null,
 )
 
-fun TransactionUi.toDomain():TransactionDomainModel{
+fun TransactionUi.toDomain(): TransactionDomainModel {
     return TransactionDomainModel(
         id = id,
         amount = amount,

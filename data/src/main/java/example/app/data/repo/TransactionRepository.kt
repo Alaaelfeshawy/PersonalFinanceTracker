@@ -3,8 +3,8 @@ package example.app.data.repo
 import example.app.data.dao.TransactionDao
 import example.app.data.entity.toDomain
 import example.app.data.entity.toEntity
-import example.app.domain.ITransactionRepository
-import example.app.domain.model.TransactionDomainModel
+import example.app.ITransactionRepository
+import example.app.model.TransactionDomainModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject

@@ -9,10 +9,11 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.createGraph
-import example.app.presentation.Statistics.BudgetScreen
+import currency_conversion.app.main.CurrencyPlugin
+import example.app.presentation.statistics.BudgetScreen
 import example.app.presentation.home.HomeScreen
-import example.app.presentation.navigation.homeNavigation.HomeNavHost
 import example.app.presentation.navigation.homeNavigation.HomeRoutes
+import example.app.presentation.navigation.homeNavigation.homeNavHost
 
 @Composable
 fun AppNavigator() {
@@ -42,11 +43,13 @@ fun AppNavigator() {
                         onTransactionClicked = { transactionId ->
                             navController.navigate(HomeRoutes.TransactionDetails(transactionId))
 
-                        }
+                        },
                     )
                 }
-                HomeNavHost(navController)
-
+                composable<MainDashboardRoutes.ExchangeRate> {
+                    CurrencyPlugin.screen().invoke()
+                }
+                homeNavHost(navController)
                 composable<MainDashboardRoutes.BudgetPlanning> {
                     BudgetScreen(listOf()){
                         navController.popBackStack()

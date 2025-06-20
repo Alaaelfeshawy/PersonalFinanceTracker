@@ -44,6 +44,8 @@ android {
 dependencies {
 
     implementation(project(":domain"))
+    implementation(project(":base"))
+    implementation(project(":currency_conversion"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

@@ -5,14 +5,11 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.toRoute
-import example.app.presentation.AddEditTransaction.AddEditTransactionScreen
-import example.app.presentation.Details.TransactionDetailsScreen
+import example.app.presentation.addEditTransaction.AddEditTransactionScreen
+import example.app.presentation.details.TransactionDetailsScreen
 
 
-fun NavGraphBuilder.HomeNavHost(
-    navController: NavController,
-
-    ) {
+fun NavGraphBuilder.homeNavHost(navController: NavController) {
     navigation<HomeRoutes.HomeScreens>(startDestination = HomeRoutes.AddTransaction) {
         composable<HomeRoutes.AddTransaction> {
             AddEditTransactionScreen(

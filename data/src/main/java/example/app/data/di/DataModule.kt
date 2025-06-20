@@ -7,7 +7,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import example.app.data.dao.TransactionDao
 import example.app.data.repo.TransactionRepository
-import example.app.domain.ITransactionRepository
+import example.app.ITransactionRepository
 import javax.inject.Singleton
 
 @Module
