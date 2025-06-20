@@ -7,6 +7,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import example.app.data.dao.BudgetDao
 import example.app.data.dao.TransactionDao
 import example.app.data.database.FinanceDatabase
 import javax.inject.Singleton
@@ -28,5 +29,10 @@ object DatabaseModule {
     @Provides
     fun provideTransactionDao(database: FinanceDatabase): TransactionDao {
         return database.transactionDao()
+    }
+
+    @Provides
+    fun provideBudgetDao(database: FinanceDatabase): BudgetDao {
+        return database.BudgetDao()
     }
 }

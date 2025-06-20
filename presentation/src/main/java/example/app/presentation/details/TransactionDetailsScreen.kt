@@ -34,6 +34,7 @@ import example.app.base.ui.components.ErrorDialog
 import example.app.base.ui.components.LoadingDialog
 import example.app.base.ui.components.TopBar
 import example.app.presentation.R
+import example.app.presentation.shared.convertMillisToDate
 import kotlinx.coroutines.flow.collectLatest
 
 @Composable
@@ -109,7 +110,8 @@ fun TransactionDetailsScreen(
 
                      Divider()
 
-                     model?.date?.let { DetailRow(label = stringResource(R.string.date), value = it) }
+                      DetailRow(label = stringResource(R.string.date), value = convertMillisToDate( model?.timestamp))
+
                      DetailRow(label = stringResource(R.string.payment_method), value = stringResource(
                          R.string.cash
                      )

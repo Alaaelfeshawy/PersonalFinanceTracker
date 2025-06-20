@@ -32,4 +32,10 @@ class TransactionRepository @Inject constructor(
    override suspend fun getTransaction(id: Long?): TransactionDomainModel?{
         return transactionDao.getTransactionById(id)?.toDomain()
     }
+
+    override  fun getThisMonthTransactions(): Flow<List<TransactionDomainModel>> {
+        return transactionDao.getTransactionsForCurrentMonth().map { list ->
+            list.map { it.toDomain() }
+        }
+    }
 }

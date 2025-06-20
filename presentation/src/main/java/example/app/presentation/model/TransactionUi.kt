@@ -7,6 +7,7 @@ data class TransactionUi(
     val amount: String?=null,
     val category: CategoryUIModel?=null,
     val date: String?=null,
+    val timestamp: Long?=null,
     val notes: String? = null,
     val type: TransactionType?=null,
 )
@@ -17,8 +18,8 @@ fun TransactionUi.toDomain(): TransactionDomainModel {
         amount = amount,
         category = category?.toCategory()?.toDomain(),
         type = type?.toDomain(),
-        date =date,
-        note =notes
+        note = notes,
+        timestamp = timestamp
     )
 }
 
@@ -28,7 +29,7 @@ fun TransactionDomainModel.toUI():TransactionUi{
         amount = amount,
         category = category?.toUi()?.toUIModel(),
         type = type?.toUi(),
-        date =date,
+        timestamp =timestamp,
         notes = note,
     )
 }

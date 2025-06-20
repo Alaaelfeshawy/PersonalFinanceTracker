@@ -4,11 +4,15 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ViewModelComponent
+import example.app.IBudgetRepository
 import example.app.ITransactionRepository
 import example.app.usecase.AddTransactionUseCase
 import example.app.usecase.EditTransactionUseCase
 import example.app.usecase.GetAllTransactionsUseCase
+import example.app.usecase.GetBudgetListUseCase
+import example.app.usecase.GetThisMonthTransactionsUseCase
 import example.app.usecase.GetTransactionUseCase
+import example.app.usecase.InsertBudgetUseCase
 import example.app.usecase.RemoveTransactionUseCase
 
 @Module
@@ -38,5 +42,20 @@ object UseCaseModule {
     @Provides
     fun provideGetTransactionUseCase(repository: ITransactionRepository): GetTransactionUseCase {
         return GetTransactionUseCase(repository)
+    }
+
+    @Provides
+    fun provideGetBudgetListUseCase(repository: IBudgetRepository): GetBudgetListUseCase {
+        return GetBudgetListUseCase(repository)
+    }
+
+    @Provides
+    fun provideInsertBudgetUseCase(repository: IBudgetRepository): InsertBudgetUseCase {
+        return InsertBudgetUseCase(repository)
+    }
+
+    @Provides
+    fun provideGetThisMonthTransactionsUseCase(repository: ITransactionRepository): GetThisMonthTransactionsUseCase {
+        return GetThisMonthTransactionsUseCase(repository)
     }
 }

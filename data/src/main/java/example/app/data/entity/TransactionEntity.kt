@@ -13,7 +13,7 @@ data class TransactionEntity(
     val amount: String?,
     val category: String?,
     val type: String?,
-    val date: String?,
+    val timestamp: Long?,
     val note: String?
 )
 
@@ -22,7 +22,7 @@ fun TransactionEntity.toDomain() = TransactionDomainModel(
     amount = amount,
     category = category?.let { CategoryDomainModel.valueOf(it) },
     type = type?.let { TransactionTypeDomainModel.valueOf(it) },
-    date = date,
+    timestamp = timestamp,
     note = note
 )
 fun TransactionDomainModel.toEntity() = TransactionEntity(
@@ -30,6 +30,6 @@ fun TransactionDomainModel.toEntity() = TransactionEntity(
     amount = amount,
     category = category?.name,
     type = type?.name,
-    date = date,
+    timestamp = timestamp,
     note = note
 )

@@ -9,4 +9,5 @@ interface ITransactionRepository {
     suspend fun removeTransaction(transaction: TransactionDomainModel)
     suspend fun editTransaction(transaction: TransactionDomainModel)
     suspend fun getTransaction(id: Long?): TransactionDomainModel?
+    fun getThisMonthTransactions():  Flow<List<TransactionDomainModel>>
 }

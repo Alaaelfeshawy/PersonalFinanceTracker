@@ -153,7 +153,10 @@ fun CurrencyConverterContent(
                             .fillMaxWidth()
                             .clickable { fromExpanded = true },
                         shape = RoundedCornerShape(12.dp),
-                        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+                        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+                        colors = CardDefaults.cardColors(
+                            containerColor = Color(0xFFFAFAFA)
+                        )
                     ) {
                         Column(Modifier.padding(12.dp)) {
                             Text("From", style = MaterialTheme.typography.labelSmall)
@@ -201,7 +204,10 @@ fun CurrencyConverterContent(
                             .fillMaxWidth()
                             .clickable { toExpanded = true },
                         shape = RoundedCornerShape(12.dp),
-                        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+                        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+                        colors = CardDefaults.cardColors(
+                            containerColor = Color(0xFFFAFAFA)
+                        )
                     ) {
                         Column(Modifier.padding(16.dp)) {
                             Text("To", style = MaterialTheme.typography.labelSmall)

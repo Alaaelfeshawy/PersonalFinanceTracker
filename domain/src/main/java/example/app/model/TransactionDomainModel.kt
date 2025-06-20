@@ -5,6 +5,6 @@ data class TransactionDomainModel(
     val amount: String?,
     val category: CategoryDomainModel?,
     val type: TransactionTypeDomainModel?,
-    val date: String?,
+    val timestamp: Long?,
     val note: String?
 )

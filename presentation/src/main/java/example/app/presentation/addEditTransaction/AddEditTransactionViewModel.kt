@@ -2,25 +2,20 @@ package example.app.presentation.addEditTransaction
 
 import dagger.hilt.android.lifecycle.HiltViewModel
 import example.app.base.ui.BaseViewModel
-import example.app.base.ui.UIEvent
 import example.app.base.ui.UIState
 import example.app.di.qualifiers.IODispatcher
-import example.app.usecase.AddTransactionUseCase
-import example.app.usecase.GetTransactionUseCase
 import example.app.presentation.model.toDomain
 import example.app.presentation.model.toUI
 import example.app.presentation.shared.NavEvent
+import example.app.presentation.shared.convertMillisToDate
+import example.app.usecase.AddTransactionUseCase
+import example.app.usecase.GetTransactionUseCase
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.onStart
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
 import javax.inject.Inject
 
 @HiltViewModel
@@ -51,6 +46,7 @@ class AddEditTransactionViewModel @Inject constructor(
                         transactionUi = transactionUi?.copy(amount = uiEvent.amount ?: transactionUi.amount,
                             category = uiEvent.category ?: transactionUi.category,
                             date = uiEvent.date?.let { convertMillisToDate(it) } ?: transactionUi.date,
+                            timestamp = uiEvent.date ?: transactionUi.timestamp,
                             notes = uiEvent.notes ?: transactionUi.notes,
                             type = uiEvent.type ?: transactionUi.type
                         )
@@ -110,8 +106,5 @@ class AddEditTransactionViewModel @Inject constructor(
         }
     }
 
-    private fun convertMillisToDate(millis: Long?): String {
-        val formatter = SimpleDateFormat("MM/dd/yyyy", Locale.getDefault())
-        return millis?.let { Date(it) }?.let { formatter.format(it) } ?: ""
-    }
+
 }
