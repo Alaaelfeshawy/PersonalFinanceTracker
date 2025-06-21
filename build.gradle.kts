@@ -4,4 +4,6 @@ plugins {
     alias(libs.plugins.kotlin.android) apply false
     alias(libs.plugins.kotlin.compose) apply false
     alias(libs.plugins.android.library) apply false
+    kotlin("plugin.serialization") version "1.8.10"
+    alias(libs.plugins.dagger.hilt.android) apply false
 }
