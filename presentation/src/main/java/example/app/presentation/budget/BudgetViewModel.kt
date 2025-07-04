@@ -6,6 +6,8 @@ import example.app.base.ui.UIState
 import example.app.di.qualifiers.IODispatcher
 import example.app.model.BudgetDomainModel
 import example.app.model.CategoryDomainModel
+import example.app.presentation.model.toUIModel
+import example.app.presentation.model.toUi
 import example.app.usecase.GetBudgetListUseCase
 import example.app.usecase.GetThisMonthTransactionsUseCase
 import example.app.usecase.InsertBudgetUseCase
@@ -62,7 +64,7 @@ class BudgetViewModel @Inject constructor(
                         }
 
                     BudgetUIModel(
-                        name = budget.name.name,
+                        name = budget.name.toUi().toUIModel().title,
                         budget = budget.limit,
                         spent = spent,
                         currency = "EGP",
